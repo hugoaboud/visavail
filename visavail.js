@@ -1042,6 +1042,18 @@
 					.on("mousemove", function(){
 						redrawTooltipWhenMoved(d3.event.layerX, d3.event.layerY, this)
 					})
+
+				g.selectAll('g')
+					.data(function (d) {
+						return d.disp_data;
+					})
+					.append("text")
+					.attr('x', function (d) {
+						return xForPoint(d, options.graph.width, options.xScale, 0) + 4
+					})
+					.attr("font-size", "8px")
+					.attr('y', options.line_spacing + 12)
+					.text(function(d) { return d[1]; });
 	
 					// .on("touchstart", function (d, i) {
 					// 	console.log("entrato",  d3.touches)

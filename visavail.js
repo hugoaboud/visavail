@@ -992,6 +992,7 @@
 						return d.disp_data;
 					})
 					.enter()
+					.append('g')
 					.append('rect')
 					.attr('x', function (d) {
 						return xForPoint(d, options.graph.width, options.xScale, 0)

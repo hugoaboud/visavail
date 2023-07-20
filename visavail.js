@@ -993,18 +993,16 @@
 					})
 					.enter()
 					.append('g')
-					.append('rect')
-					.attr('x', function (d) {
-						return xForPoint(d, options.graph.width, options.xScale, 0)
+					.attr('transform',  function (d) {
+						const x = xForPoint(d, options.graph.width, options.xScale, 0)
+						return `translate(${x},0)`
 					})
+					.append('rect')
 					.attr('width', function (d) {
 						return widthForPoint(d, options.graph.width, options.xScale, 0)
 					})
 					.attr('y', options.line_spacing)
 					.attr('height', options.graph.height)
-					.attr('transform',  function (d) {
-						return transformForTypeOfGraph(d, options.xScale, options.graph.height, options.line_spacing, 0)
-					})
 					.attr('rx',  function (d) {
 						return roundedRect()
 					})
@@ -1049,11 +1047,10 @@
 						return d.disp_data;
 					})
 					.append("text")
-					.attr('x', function (d) {
-						return xForPoint(d, options.graph.width, options.xScale, 0) + 4
-					})
+					.attr('x', 4)
 					.attr("font-size", "8px")
 					.attr('y', options.line_spacing + 12)
+					
 					.text(function(d) { return d[1]; });
 	
 					// .on("touchstart", function (d, i) {
@@ -1403,15 +1400,21 @@
 						else if(e.sourceEvent)
 							redrawTooltipWhenMoved(e.sourceEvent.layerX, e.sourceEvent.layerY)
 							
+						g.selectAll('g')
+							.attr("transform", function (d) {
+								const x = xForPoint(d, options.graph.width, options.xScale, 0);
+								return "translate(" + x + ",0)"
+							})
+
 						g.selectAll('rect')
-							.attr('x', function (d) {
-								return xForPoint(d, options.graph.width, options.xScale, 0);
-							})
-							.attr('width', function (d) {
-								return widthForPoint(d, options.graph.width, options.xScale, 0);
-							})
 							.attr('transform',  function (d) {
 								return transformForTypeOfGraph(d, options.xScale, options.graph.height, options.line_spacing, 0)
+							})
+							// .attr('x', function (d) {
+							// 	return xForPoint(d, options.graph.width, options.xScale, 0);
+							// })
+							.attr('width', function (d) {
+								return widthForPoint(d, options.graph.width, options.xScale, 0);
 							})
 
 						//change label x axis

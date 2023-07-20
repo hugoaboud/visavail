@@ -1405,6 +1405,11 @@
 								const x = xForPoint(d, options.graph.width, options.xScale, 0);
 								return "translate(" + x + ",0)"
 							})
+							.attr("opacity", function (d) {
+								let w = widthForPoint(d, options.graph.width, options.xScale, 0);
+								if (w > 0) return 1.0
+								return 0.0
+							})
 
 						g.selectAll('rect')
 							.attr('transform',  function (d) {
